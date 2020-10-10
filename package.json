@@ -2,33 +2,29 @@
   "name": "demo1",
   "version": "0.0.0",
   "watch": {
-    "build:element1:deploy": "dist/element1/*.js",
-    "build:element2:deploy": "dist/element2/*.js"
+    "build:element1:deploy": "dist/element1/*.js"
   },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-
+    "watch": "npm-watch",
     "build:demo1": "ng build --project=demo1 --prod --output-hashing=none",
     "serve:demo1": "cd dist/demo1 && lite-server",
     "watch:elements": "concurrently -k \"npm run watch:element1\" \"npm run watch:element2\" ",
-
     "build:elements": "npm run build:element1 && npm run build:element2 && npm run build:element1:deploy && npm run build:element2:deploy",
-
     "build:element1": "ng build --project=element1 --prod --output-hashing=none --single-bundle",
     "build:element1:deploy": "cp dist/element1/main.js dist/demo1/element1.js && cp dist/element1/polyfills.js dist/demo1/elm-polyfills.js ",
     "watch:element1": "ng build --watch --project=element1 --prod --output-hashing=none --single-bundle",
-
     "build:element2": "ng build --project=element2 --prod --output-hashing=none --single-bundle",
     "build:element2:deploy": "cp dist/element2/main.js dist/demo1/element2.js",
     "watch:element2": "ng build --watch --project=element2 --prod --output-hashing=none --single-bundle",
-
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
+    "@angular-extensions/elements": "^10.1.1",
     "@angular/animations": "~10.1.5",
     "@angular/common": "~10.1.5",
     "@angular/compiler": "~10.1.5",
