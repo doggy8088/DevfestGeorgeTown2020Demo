@@ -1,10 +1,28 @@
 {
   "name": "demo1",
   "version": "0.0.0",
+  "watch": {
+    "build:element1:deploy": "dist/element1/*.js",
+    "build:element2:deploy": "dist/element2/*.js"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+
+    "build:demo1": "ng build --project=demo1 --prod --output-hashing=none",
+    "serve:demo1": "cd dist/demo1 && lite-server",
+    "watch:elements": "concurrently -k \"npm run watch:element1\" \"npm run watch:element2\" ",
+
+    "build:elements": "npm run build:element1 && npm run build:element2 && npm run build:element1:deploy && npm run build:element2:deploy",
+
+    "build:element1": "ng build --project=element1 --prod --output-hashing=none --single-bundle",
+    "build:element1:deploy": "cp dist/element1/main.js dist/demo1/element1.js && cp dist/element1/polyfills.js dist/demo1/elm-polyfills.js ",
+    "watch:element1": "ng build --watch --project=element1 --prod --output-hashing=none --single-bundle",
+
+    "build:element2": "ng build --project=element2 --prod --output-hashing=none --single-bundle",
+    "build:element2:deploy": "cp dist/element2/main.js dist/demo1/element2.js",
+    "watch:element2": "ng build --watch --project=element2 --prod --output-hashing=none --single-bundle",
+
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -20,7 +38,7 @@
     "@angular/platform-browser": "~10.1.5",
     "@angular/platform-browser-dynamic": "~10.1.5",
     "@angular/router": "~10.1.5",
-    "document-register-element": "^1.7.2",
+    "document-register-element": "^1.14.10",
     "ngx-build-plus": "^10.1.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
@@ -30,10 +48,11 @@
     "@angular-devkit/build-angular": "~0.1001.6",
     "@angular/cli": "~10.1.6",
     "@angular/compiler-cli": "~10.1.5",
-    "@types/node": "^12.11.1",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
+    "concurrently": "^5.3.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
@@ -41,6 +60,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "npm-watch": "^0.7.0",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
